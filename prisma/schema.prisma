@@ -24,7 +24,7 @@ model service {
   service_title String   @db.VarChar(100)
   price         Decimal? @db.Decimal(20, 2)
   record        record[]
-  worker        worker[]
+  workers       worker[]
 }
 
 model user {
@@ -51,5 +51,5 @@ model worker {
   name        String    @db.VarChar(255)
   middle_name String    @db.VarChar(255)
   record      record[]
-  service     service[]
+  services    service[]
 }
