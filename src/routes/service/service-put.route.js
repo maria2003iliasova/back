@@ -1,9 +1,8 @@
-import prisma from '../../lib/prisma'
-import schema, {joiSchema} from './login.spec/login.schema'
-export const swPostUser = {
-    "summary": "Create the new user",
+import schema, {joiSchema} from './service.spec/service.schema'
+export const swPutService = {
+    "summary": "Update the service",
     "tags": [
-        "login"
+        "service"
     ],
     "requestBody": {
         "content": {
@@ -16,7 +15,7 @@ export const swPostUser = {
     },
     "responses": {
         "200": {
-            "description": "User created"
+            "description": "Service updated"
         },
         "default": {
             "description": "Error message"
@@ -26,10 +25,13 @@ export const swPostUser = {
 export default async (req, res) => {
     try {
         await joiSchema.validateAsync(req.body)
-        const user = await prisma.user.create({
-            data: req.body
+        const service = await prisma.service.update({
+            data: req.body,
+            where:{
+                service_id:Number(req.params.id)
+            }
         })
-        res.send(user)
+        res.send(service)
     } catch(err) {
         res.send(err)
     }

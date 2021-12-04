@@ -1,9 +1,9 @@
 import prisma from "../../lib/prisma"
 
-export const swGetUser = {
-    "summary": "Retrieve the list with all of the users",
+export const swGetWorker = {
+    "summary": "Retrieve the list with all of the workers",
     "tags": [
-        "login"
+        "worker"
     ],
     "responses": {
         "200": {
@@ -13,6 +13,6 @@ export const swGetUser = {
 }
 // the route
 export default async (req, res) => {
-    const users = await prisma.user.findMany()
-    res.send(users)
+    const workers = await prisma.worker.findMany()
+    res.send(workers)
 }

@@ -1,7 +1,7 @@
 import prisma from '../../lib/prisma'
 import schema, {joiSchema} from './login.spec/login.schema'
-export const swPostUser = {
-    "summary": "Create the new user",
+export const swDeleteUser = {
+    "summary": "Delete the user",
     "tags": [
         "login"
     ],
@@ -16,7 +16,7 @@ export const swPostUser = {
     },
     "responses": {
         "200": {
-            "description": "User created"
+            "description": "User deleted"
         },
         "default": {
             "description": "Error message"
@@ -24,13 +24,10 @@ export const swPostUser = {
     }
 }
 export default async (req, res) => {
-    try {
-        await joiSchema.validateAsync(req.body)
-        const user = await prisma.user.create({
-            data: req.body
-        })
-        res.send(user)
-    } catch(err) {
-        res.send(err)
-    }
+    const users = await prisma.user.delete({
+        where:{
+            user_id:Number(req.params.id)
+        }
+    })
+    res.send(users)
 }
