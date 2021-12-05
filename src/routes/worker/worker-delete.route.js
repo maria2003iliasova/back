@@ -26,7 +26,7 @@ export const swDeleteWorker = {
 export default async (req, res) => {
     const worker = await prisma.worker.delete({
         where:{
-            worker_id:Number(req.params.id)
+            id:Number(req.params.id)
         }
     })
     res.send(worker)

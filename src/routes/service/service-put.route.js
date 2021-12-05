@@ -28,7 +28,7 @@ export default async (req, res) => {
         const service = await prisma.service.update({
             data: req.body,
             where:{
-                service_id:Number(req.params.id)
+                id:Number(req.params.id)
             }
         })
         res.send(service)

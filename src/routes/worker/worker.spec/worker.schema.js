@@ -2,8 +2,9 @@ import joi from "joi"
 import joiToSwagger from "joi-to-swagger";
 
 export const joiSchema = joi.object().keys({
-    surname: joi.string(),
-    name: joi.string(),
-    middle_name: joi.string()
+    lastName: joi.string(),
+    firstName: joi.string(),
+    middleName: joi.string(),
+    service: joi.array()
 })
 export default joiToSwagger(joiSchema).swagger

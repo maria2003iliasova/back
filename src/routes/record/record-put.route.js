@@ -28,7 +28,7 @@ export default async (req, res) => {
         const record = await prisma.record.update({
             data: req.body,
             where:{
-                record_id:Number(req.params.id)
+                id:Number(req.params.id)
             }
         })
         res.send(record)

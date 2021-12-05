@@ -26,7 +26,7 @@ export const swDeleteRecord = {
 export default async (req, res) => {
     const records = await prisma.record.delete({
         where:{
-            record_id:Number(req.params.id)
+            id:Number(req.params.id)
         }
     })
     res.send(records)

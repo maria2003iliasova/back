@@ -26,7 +26,7 @@ export const swDeleteService = {
 export default async (req, res) => {
     const services = await prisma.service.delete({
         where:{
-            service_id:Number(req.params.id)
+            id:Number(req.params.id)
         }
     })
     res.send(services)

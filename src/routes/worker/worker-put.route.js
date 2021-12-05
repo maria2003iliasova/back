@@ -25,14 +25,20 @@ export const swPutWorker = {
 export default async (req, res) => {
     try {
         await joiSchema.validateAsync(req.body)
+        const {service, ...data}=req.body
         const worker = await prisma.worker.update({
-            data: req.body,
+            data: {
+                services:{
+                    connect:service
+                }
+            },
             where:{
-                worker_id:Number(req.params.id)
+                id:Number(req.params.id)
             }
         })
         res.send(worker)
     } catch(err) {
         res.send(err)
     }
+
 }
