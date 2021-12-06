@@ -6,9 +6,10 @@ import recordRouter from './routes/record';
 import serviceRouter from './routes/service';
 import workerRouter from './routes/worker';
 import prisma from "./lib/prisma";
+import cors from "cors"
 const app = express()
 app.use(express.json())
-
+app.use(cors())
 app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swagger))
 app.use('/login', loginRouter)
 app.use('/record', recordRouter)

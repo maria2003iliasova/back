@@ -13,6 +13,10 @@ export const swGetService = {
 }
 // the route
 export default async (req, res) => {
-    const services = await prisma.service.findMany()
+    const services = await prisma.service.findMany({
+        where:{
+            category:req.query.category.toUpperCase()
+        }
+    })
     res.send(services)
 }

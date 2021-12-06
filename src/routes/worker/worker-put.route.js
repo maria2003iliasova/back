@@ -28,6 +28,7 @@ export default async (req, res) => {
         const {service, ...data}=req.body
         const worker = await prisma.worker.update({
             data: {
+                ...data,
                 services:{
                     connect:service
                 }

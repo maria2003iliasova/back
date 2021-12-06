@@ -10,24 +10,23 @@ datasource db {
 model record {
   id Int @id @default(autoincrement())
 
-  user    user     @relation(fields: [userId], references: [id])
-  worker  worker   @relation(fields: [workerId], references: [id])
-  service service  @relation(fields: [serviceId], references: [id])
-  date    DateTime @db.Date
-  time    DateTime @db.Time(6)
+  user    user      @relation(fields: [userId], references: [id])
+  worker  worker    @relation(fields: [workerId], references: [id])
+  service service[]
+  date    String    @db.VarChar(100)
+  time    String    @db.VarChar(100)
 
-  userId    Int
-  workerId  Int
-  serviceId Int
+  userId   Int
+  workerId Int
 }
 
 model service {
-  id    Int      @id @default(autoincrement())
-  title String   @db.VarChar(100)
-  price Decimal? @db.Decimal(20, 2)
-
-  record record[]
-  worker worker[]
+  id       Int      @id @default(autoincrement())
+  title    String   @db.VarChar(100)
+  price    Decimal? @db.Decimal(20, 2)
+  category Category
+  record   record[]
+  worker   worker[]
 }
 
 model user {
@@ -47,6 +46,13 @@ model user {
 enum Role {
   USER
   ADMIN
+}
+
+enum Category {
+  CREATIVE
+  HYGIENE
+  CLEANING
+  HAIRCUT
 }
 
 model worker {

@@ -26,9 +26,21 @@ export const swPostRecord = {
 export default async (req, res) => {
     try {
         await joiSchema.validateAsync(req.body)
+        const {user, worker, service, ...data}=req.body
         const record = await prisma.record.create({
-            data: req.body
-        })
+            data: {
+                ...data,
+                user:{
+                    connect:user
+                },
+                worker:{
+                    connect:worker
+                },
+                service:{
+                    connect:service
+                }
+            },
+        }).catch(console.log)
         res.send(record)
     } catch(err) {
         res.send(err)

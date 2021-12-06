@@ -13,6 +13,21 @@ export const swGetRecord = {
 }
 // the route
 export default async (req, res) => {
-    const records = await prisma.record.findMany()
+    const records = await prisma.record.findMany({
+        include:{
+            user:{
+                select:{
+                    firstName:true,
+                    lastName:true
+                }
+            },
+            worker:true,
+            service:{
+                select:{
+                    title:true
+                }
+            }
+        }
+    })
     res.send(records)
 }

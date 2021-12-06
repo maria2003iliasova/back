@@ -8,6 +8,7 @@ export const joiSchema = joi.object().keys({
     login: joi.string(),
     password: joi.string(),
     phone: joi.string(),
-    email: joi.string().email()
+    email: joi.string().email(),
+    role: joi.string()
 })
 export default joiToSwagger(joiSchema).swagger
