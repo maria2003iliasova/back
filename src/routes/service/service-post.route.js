@@ -26,9 +26,10 @@ export const swPostService = {
 export default async (req, res) => {
     try {
         await joiSchema.validateAsync(req.body)
+        console.log(req.body)
         const service = await prisma.service.create({
             data: req.body
-        })
+        }).catch(console.log)
         res.send(service)
     } catch(err) {
         res.send(err)
