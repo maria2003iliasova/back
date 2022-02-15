@@ -1,8 +1,10 @@
-import schema, {joiSchema} from './login.spec/login.schema'
-export const swPutUser = {
-    "summary": "Update the user",
+import prisma from '../../lib/prisma'
+import schema, {joiSchema} from './signup.spec/signup.schema'
+const bcrypt = require('bcrypt')
+export const swPostSignup = {
+    "summary": "Create the new user",
     "tags": [
-        "login"
+        "signup"
     ],
     "requestBody": {
         "content": {
@@ -15,7 +17,7 @@ export const swPutUser = {
     },
     "responses": {
         "200": {
-            "description": "User updated"
+            "description": "User created"
         },
         "default": {
             "description": "Error message"
@@ -25,12 +27,11 @@ export const swPutUser = {
 export default async (req, res) => {
     try {
         await joiSchema.validateAsync(req.body)
-        const user = await prisma.user.update({
-            data: req.body,
-            where:{
-                id:Number(req.params.id)
-            }
-        })
+        console.log(req.body)
+        const hashPassword = bcrypt.hashSync(password, 7);
+        const user = await prisma.user.create({
+            data: req.body
+        }).catch(console.log)
         res.send(user)
     } catch(err) {
         res.send(err)

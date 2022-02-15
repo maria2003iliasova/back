@@ -1,9 +1,9 @@
 import prisma from '../../lib/prisma'
-import schema, {joiSchema} from './login.spec/login.schema'
-export const swPostUser = {
+import schema, {joiSchema} from './signin.spec/signin.schema'
+export const swPostSignin = {
     "summary": "Create the new user",
     "tags": [
-        "login"
+        "signin"
     ],
     "requestBody": {
         "content": {
