@@ -1,6 +1,6 @@
 import prisma from '../../lib/prisma'
 import schema, {joiSchema} from './signup.spec/signup.schema'
-const bcrypt = require('bcrypt')
+import bcrypt from "bcrypt"
 export const swPostSignup = {
     "summary": "Create the new user",
     "tags": [
@@ -28,12 +28,17 @@ export default async (req, res) => {
     try {
         await joiSchema.validateAsync(req.body)
         console.log(req.body)
-        const hashPassword = bcrypt.hashSync(password, 7);
+        const hashPassword = await bcrypt.hash(req.body.password, 5);
+        console.log(hashPassword)
         const user = await prisma.user.create({
-            data: req.body
-        }).catch(console.log)
+            data: {
+                ...req.body,
+                password: hashPassword
+            }
+        })
         res.send(user)
     } catch(err) {
+        console.log(err)
         res.send(err)
     }
 }

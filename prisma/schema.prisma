@@ -34,7 +34,7 @@ model user {
   lastName   String @db.VarChar(255)
   firstName  String @db.VarChar(255)
   middleName String @db.VarChar(255)
-  login      String @db.VarChar(100)
+  login      String @db.VarChar(100) @unique
   password   String @db.VarChar(100)
   phone      String @db.VarChar(100)
   email      String @db.VarChar(255)

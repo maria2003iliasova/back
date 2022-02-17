@@ -1,5 +1,7 @@
 import prisma from '../../lib/prisma'
 import schema, {joiSchema} from './signin.spec/signin.schema'
+import jwt from "jsonwebtoken"
+import bcrypt from "bcrypt"
 export const swPostSignin = {
     "summary": "Create the new user",
     "tags": [
@@ -27,11 +29,21 @@ export default async (req, res) => {
     try {
         await joiSchema.validateAsync(req.body)
         console.log(req.body)
-        const user = await prisma.user.create({
-            data: req.body
-        }).catch(console.log)
-        res.send(user)
+        const user = await prisma.user.findUnique({
+            where: {
+                login: req.body.login
+            }
+        })
+        const passwordMatch = await bcrypt.compare (req.body.password, user.password)
+        if (!passwordMatch) return res.status(400).json({
+            error: "Пароль не совпадает"
+        })
+        const token = jwt.sign({
+            id: user.id, role: user.role
+        },"секрет")
+        res.send({user, token})
     } catch(err) {
+        console.log(err)
         res.send(err)
     }
 }
