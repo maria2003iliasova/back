@@ -40,7 +40,7 @@ export default async (req, res) => {
         })
         const token = jwt.sign({
             id: user.id, role: user.role
-        },"секрет")
+        },"secret")
         res.send({user, token})
     } catch(err) {
         console.log(err)
