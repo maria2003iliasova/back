@@ -36,16 +36,15 @@ export default async (req, res) => {
         })
         if (candidate) return res.send({error: "Логин занят"})
         const hashPassword = await bcrypt.hash(req.body.password, 5);
-        const mail = await sendMail(req.body.email);
         console.log(hashPassword)
         const user = await prisma.user.create({
             data: {
                 ...req.body,
-                password: hashPassword,
-                email: mail
+                password: hashPassword
             }
         }).catch(console.error)
-        res.send(user ? user : {error: "Somethig went wrong"})
+        await sendMail(req.body.email);
+        res.send(user ? user : {error: "Something went wrong"})
     } catch(err) {
         console.log(err)
         res.send(err)

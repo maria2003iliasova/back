@@ -1,3 +1,3 @@
 module.exports = {
-    secret: "grooming-secret-key"
+    secret: "secret"
 };

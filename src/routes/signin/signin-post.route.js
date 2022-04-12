@@ -3,7 +3,7 @@ import schema, {joiSchema} from './signin.spec/signin.schema'
 import jwt from "jsonwebtoken"
 import bcrypt from "bcrypt"
 export const swPostSignin = {
-    "summary": "Create the new user",
+    "summary": "Sign in",
     "tags": [
         "signin"
     ],
@@ -18,7 +18,7 @@ export const swPostSignin = {
     },
     "responses": {
         "200": {
-            "description": "User created"
+            "description": "User sign in"
         },
         "default": {
             "description": "Error message"

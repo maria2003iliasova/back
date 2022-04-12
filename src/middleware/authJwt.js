@@ -1,4 +1,3 @@
-const { prisma } = require("@prisma/client");
 const jwt = require("jsonwebtoken");
 const config = require("../config/auth.config.js");
 const verifyToken = (req, res, next) => {
@@ -9,6 +8,7 @@ const verifyToken = (req, res, next) => {
     });
   }
   jwt.verify(token, config.secret, (err, decoded) => {
+    console.log(err)
     if (err) {
       return res.status(401).send({
         message: "Unauthorized!"
@@ -24,8 +24,9 @@ const isAdmin = async(req, res, next) => {
       id:req.userId
     }
   })
+  console.log(user)
   if (user.role === "ADMIN") return next()
-return res.status(403) 
+  return res.status(403).json({error: "U cant do that"})
 }
 const authJwt = {
   verifyToken: verifyToken,
